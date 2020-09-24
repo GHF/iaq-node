@@ -10,8 +10,8 @@ i2c:
 
 uart:
   - id: uart_bus_0
-    rx_pin: GPIO26
-    tx_pin: GPIO27
+    rx_pin: 26
+    tx_pin: 27
     baud_rate: 9600
     data_bits: 8
     parity: NONE
