@@ -2,9 +2,11 @@ i2c:
   - id: i2c_bus_0
     sda: 21
     scl: 22
+    frequency: 100kHz
   - id: i2c_bus_1
     sda: 37
     scl: 38
+    frequency: 100kHz
 
 uart:
   - id: uart_bus_0
