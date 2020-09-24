@@ -5,13 +5,15 @@ esphome:
 binary_sensor:
   - platform: gpio
     id: gpio_s1
-    name: "Button S1"
+    name: "${friendly_shortname} Button S1"
+    internal: true
     pin:
       number: 0
       inverted: True
   - platform: gpio
     id: gpio_s2
-    name: "Button S2"
+    name: "${friendly_shortname} Button S2"
+    internal: true
     pin:
       number: 35
       inverted: True
