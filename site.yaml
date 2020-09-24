@@ -1,0 +1,26 @@
+esphome:
+  name: esphome_iaq_0
+  comment: Indoor air quality sensor node 0
+  platform: ${esphome_platform}
+  board: ${esphome_board}
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: !secret wifi_ap_ssid
+    password: !secret wifi_ap_password
+
+captive_portal:
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+  password: !secret api_password
+
+ota:
+  password: !secret ota_password

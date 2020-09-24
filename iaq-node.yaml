@@ -1,0 +1,48 @@
+substitutions:
+  esphome_platform: ESP32
+  esphome_board: featheresp32
+
+time:
+  - platform: homeassistant
+    id: time_esp
+
+binary_sensor:
+  - platform: gpio
+    id: gpio_s1
+    name: "Button S1"
+    pin:
+      number: 0
+      inverted: True
+  - platform: gpio
+    id: gpio_s2
+    name: "Button S2"
+    pin:
+      number: 35
+      inverted: True
+
+spi:
+  clk_pin: GPIO18
+  mosi_pin: GPIO19
+
+display:
+  - platform: st7789v
+    id: display_0
+    backlight_pin: GPIO4
+    cs_pin: GPIO5
+    dc_pin: GPIO16
+    reset_pin: GPIO23
+    lambda: |-
+      it.print(0, 0, id(callunasans_24), "Hello, World!");
+
+font:
+  - file: "CallunaSans-Regular.ttf"
+    id: callunasans_48
+    size: 48
+  - file: "CallunaSans-Regular.ttf"
+    id: callunasans_24
+    size: 24
+  - file: "CallunaSans-Regular.ttf"
+    id: callunasans_12
+    size: 12
+
+<<: !include site.yaml
