@@ -1,6 +1,7 @@
 packages:
   site: !include site.yaml
   board: !include board_ttgo_t-display.yaml
+  product: !include product_iaq_monitor.yaml
 
 esphome:
   name: ${esphome_name}

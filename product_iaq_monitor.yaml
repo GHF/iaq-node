@@ -1,0 +1,30 @@
+i2c:
+  - id: i2c_bus_0
+    sda: 21
+    scl: 22
+  - id: i2c_bus_1
+    sda: 37
+    scl: 38
+
+uart:
+  - id: uart_bus_0
+    rx_pin: GPIO26
+    tx_pin: GPIO27
+    baud_rate: 9600
+    data_bits: 8
+    parity: NONE
+    stop_bits: 1
+
+sensor:
+  - platform: pmsx003
+    type: PMSX003
+    uart_id: uart_bus_0
+    pm_1_0:
+      name: "${friendly_shortname} PM <1.0µm Concentration"
+      id: iaq_pm_1_0
+    pm_2_5:
+      name: "${friendly_shortname} PM 1.0–2.5µm Concentration"
+      id: iaq_pm_2_5
+    pm_10_0:
+      name: "${friendly_shortname} PM 2.5–10.0µm Concentration"
+      id: iaq_pm_10_0
