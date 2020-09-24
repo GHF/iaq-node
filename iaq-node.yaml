@@ -5,6 +5,7 @@ packages:
 esphome:
   name: ${esphome_name}
   comment: ${esphome_comment}
+  build_path: ./build/${esphome_name}
 
 time:
   - platform: homeassistant

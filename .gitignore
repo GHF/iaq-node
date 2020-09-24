@@ -6,6 +6,6 @@
 **/src/
 **/platformio.ini
 /secrets.yaml
-/esphome_iaq_0/
+/build/
 .*.swp
 .*.swo
