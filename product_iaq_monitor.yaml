@@ -22,6 +22,7 @@ sensor:
     i2c_id: i2c_bus_0
     co2:
       name: "${friendly_shortname} SCD30 CO₂ Concentration"
+      id: iaq_scd30_co2
       filters:
         &scd30-common-filters
         - exponential_moving_average:
@@ -29,9 +30,11 @@ sensor:
             send_every: 5
     temperature:
       name: "${friendly_shortname} SCD30 Temperature"
+      id: iaq_scd30_temperature
       filters: *scd30-common-filters
     humidity:
       name: "${friendly_shortname} SCD30 Humidity"
+      id: iaq_scd30_humidity
       filters: *scd30-common-filters
     update_interval: 2s
   - platform: pmsx003
