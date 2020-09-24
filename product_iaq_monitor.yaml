@@ -38,9 +38,16 @@ sensor:
     pm_1_0:
       name: "${friendly_shortname} PM <1.0µm Concentration"
       id: iaq_pm_1_0
+      filters:
+        &pmsx003-common-filters
+        - exponential_moving_average:
+            alpha: 0.2
+            send_every: 10
     pm_2_5:
       name: "${friendly_shortname} PM 1.0–2.5µm Concentration"
       id: iaq_pm_2_5
+      filters: *pmsx003-common-filters
     pm_10_0:
       name: "${friendly_shortname} PM 2.5–10.0µm Concentration"
       id: iaq_pm_10_0
+      filters: *pmsx003-common-filters
