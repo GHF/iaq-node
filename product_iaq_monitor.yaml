@@ -16,6 +16,22 @@ uart:
     stop_bits: 1
 
 sensor:
+  - platform: scd30
+    i2c_id: i2c_bus_0
+    co2:
+      name: "${friendly_shortname} SCD30 CO₂ Concentration"
+      filters:
+        &scd30-common-filters
+        - exponential_moving_average:
+            alpha: 0.4
+            send_every: 5
+    temperature:
+      name: "${friendly_shortname} SCD30 Temperature"
+      filters: *scd30-common-filters
+    humidity:
+      name: "${friendly_shortname} SCD30 Humidity"
+      filters: *scd30-common-filters
+    update_interval: 2s
   - platform: pmsx003
     type: PMSX003
     uart_id: uart_bus_0
