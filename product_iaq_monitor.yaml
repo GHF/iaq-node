@@ -4,8 +4,8 @@ i2c:
     scl: 22
     frequency: 100kHz
   - id: i2c_bus_1
-    sda: 37
-    scl: 38
+    sda: 17
+    scl: 13
     frequency: 100kHz
 
 uart:
@@ -37,6 +37,24 @@ sensor:
       id: iaq_scd30_humidity
       filters: *scd30-common-filters
     update_interval: 2s
+  - platform: sgp30
+    i2c_id: &svm30-i2c-bus i2c_bus_1
+    eco2:
+      name: "${friendly_shortname} SVM30 eCO₂ Concentration"
+      id: iaq_svm30_eco2
+    tvoc:
+      name: "${friendly_shortname} SVM30 TVOC Concentration"
+      id: iaq_svm30_tvoc
+    update_interval: &svm30-update-interval 1s
+  - platform: shtcx
+    i2c_id: *svm30-i2c-bus
+    temperature:
+      name: "${friendly_shortname} SVM30 Temperature"
+      id: iaq_svm30_temperature
+    humidity:
+      name: "${friendly_shortname} SVM30 Humidity"
+      id: iaq_svm30_humidity
+    update_interval: *svm30-update-interval
   - platform: pmsx003
     type: PMSX003
     uart_id: uart_bus_0
