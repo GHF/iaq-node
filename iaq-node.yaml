@@ -14,10 +14,10 @@ time:
 # TODO(xo): Move display block into board config
 display:
   - platform: st7789v
-    backlight_pin: GPIO4
-    cs_pin: GPIO5
-    dc_pin: GPIO16
-    reset_pin: GPIO23
+    backlight_pin: 4
+    cs_pin: 5
+    dc_pin: 16
+    reset_pin: 23
     lambda: |-
       it.print(0, 0, id(callunasans_24), "Hello, World!");
 
