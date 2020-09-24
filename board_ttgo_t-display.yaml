@@ -1,6 +1,6 @@
 esphome:
   platform: ESP32
-  board: featheresp32
+  board: esp32dev
 
 binary_sensor:
   - platform: gpio
