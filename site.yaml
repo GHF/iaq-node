@@ -1,8 +1,7 @@
-esphome:
-  name: esphome_iaq_0
-  comment: Indoor air quality sensor node 0
-  platform: ${esphome_platform}
-  board: ${esphome_board}
+substitutions:
+  esphome_name: esphome_iaq_0
+  esphome_comment: Indoor Air Quality Node 0
+  friendly_shortname: IAQ Node
 
 wifi:
   ssid: !secret wifi_ssid

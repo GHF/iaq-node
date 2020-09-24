@@ -1,0 +1,21 @@
+esphome:
+  platform: ESP32
+  board: featheresp32
+
+binary_sensor:
+  - platform: gpio
+    id: gpio_s1
+    name: "Button S1"
+    pin:
+      number: 0
+      inverted: True
+  - platform: gpio
+    id: gpio_s2
+    name: "Button S2"
+    pin:
+      number: 35
+      inverted: True
+
+spi:
+  clk_pin: GPIO18
+  mosi_pin: GPIO19
