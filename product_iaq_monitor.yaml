@@ -42,18 +42,29 @@ sensor:
     eco2:
       name: "${friendly_shortname} SVM30 eCO₂ Concentration"
       id: iaq_svm30_eco2
+      filters:
+        &svm30-common-filters
+        - exponential_moving_average:
+            alpha: 0.2
+            send_every: 10
     tvoc:
       name: "${friendly_shortname} SVM30 TVOC Concentration"
       id: iaq_svm30_tvoc
+      filters: *svm30-common-filters
+    compensation:
+      temperature_source: iaq_svm30_temperature
+      humidity_source: iaq_svm30_humidity
     update_interval: &svm30-update-interval 1s
   - platform: shtcx
     i2c_id: *svm30-i2c-bus
     temperature:
       name: "${friendly_shortname} SVM30 Temperature"
       id: iaq_svm30_temperature
+      filters: *svm30-common-filters
     humidity:
       name: "${friendly_shortname} SVM30 Humidity"
       id: iaq_svm30_humidity
+      filters: *svm30-common-filters
     update_interval: *svm30-update-interval
   - platform: pmsx003
     type: PMSX003
