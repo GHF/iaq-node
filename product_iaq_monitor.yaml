@@ -3,6 +3,7 @@ i2c:
     sda: 21
     scl: 22
     frequency: 100kHz
+
   - id: i2c_bus_1
     sda: 17
     scl: 13
@@ -31,6 +32,7 @@ sensor:
           send_every: 2
           send_first_at: 2
       - debounce: 1s
+
   # Aggregated humidity
   - platform: template
     name: "${friendly_shortname} Humidity"
@@ -38,6 +40,7 @@ sensor:
     unit_of_measurement: "%"
     icon: "mdi:water-percent"
     filters: *iaq-aggregate-filters
+
   - platform: scd30
     i2c_id: i2c_bus_0
     co2:
@@ -85,6 +88,7 @@ sensor:
       temperature_source: iaq_svm30_temperature
       humidity_source: iaq_svm30_humidity
     update_interval: &svm30-update-interval 1s
+
   - platform: shtcx
     i2c_id: *svm30-i2c-bus
     temperature:
@@ -100,6 +104,7 @@ sensor:
       on_value: *iaq-humidity-publish
       internal: true
     update_interval: *svm30-update-interval
+
   - platform: pmsx003
     type: PMSX003
     uart_id: uart_bus_0

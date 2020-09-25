@@ -26,9 +26,11 @@ font:
   - file: "CallunaSans-Regular.ttf"
     id: callunasans_48
     size: 48
+
   - file: "CallunaSans-Regular.ttf"
     id: callunasans_24
     size: 24
+
   - file: "CallunaSans-Regular.ttf"
     id: callunasans_12
     size: 12
