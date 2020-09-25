@@ -1,6 +1,16 @@
 esphome:
   platform: ESP32
   board: esp32dev
+  on_boot:
+    priority: -100
+    then:
+      lambda: id(ledc_display_backlight).set_level(1.0);
+
+output:
+  - platform: ledc
+    pin: 4
+    id: ledc_display_backlight
+    frequency: 19531Hz # 12-bit depth
 
 binary_sensor:
   - platform: gpio
