@@ -7,6 +7,18 @@ esphome:
   name: ${esphome_name}
   comment: ${esphome_comment}
   build_path: ./build/${esphome_name}
+  platformio_options:
+    # Unset option set by https://github.com/espressif/arduino-esp32/blob/idf-release/v4.0/platform.txt#L31
+    build_unflags: -std=gnu++11
+    # Enable C++17
+    build_flags: -std=gnu++1z
+    # Force the use of a newer ESP32 toolchain, which also requires a dev branch
+    # of arduino-esp32 that's compatible with ESP-IDF 4 (3.3 contained only GCC
+    # 5.2.0, which had poor C++17 support)
+    platform_packages: |
+
+      	toolchain-xtensa32 @ >2.80200.200827
+      	framework-arduinoespressif32 @ https://github.com/espressif/arduino-esp32.git#idf-release/v4.0
 
 time:
   - platform: homeassistant
