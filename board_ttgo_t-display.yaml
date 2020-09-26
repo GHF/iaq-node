@@ -12,23 +12,6 @@ output:
     id: ledc_display_backlight
     frequency: 19531Hz # 12-bit depth
 
-binary_sensor:
-  - platform: gpio
-    id: gpio_s1
-    name: "${friendly_shortname} Button S1"
-    internal: true
-    pin:
-      number: 0
-      inverted: True
-
-  - platform: gpio
-    id: gpio_s2
-    name: "${friendly_shortname} Button S2"
-    internal: true
-    pin:
-      number: 35
-      inverted: True
-
 spi:
   - id: spi_bus_0
     clk_pin: 18

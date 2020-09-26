@@ -88,12 +88,16 @@ void DrawPage(DisplayBuffer& it, size_t page_index) {
   // Must be function statically initialized because id() can't be called at
   // namespace init time.
   static std::array kPages{
+      Page{{Card{.name = u8"CO₂", .sensor = &id(iaq_scd30_co2)},
+            Card{.name = "TVOC", .sensor = &id(iaq_svm30_tvoc)}}},
+      Page{{Card{.name = "PM 2.5", .sensor = &id(iaq_pm_2_5)},
+            Card{.name = "PM 10", .sensor = &id(iaq_pm_10_0)}}},
       Page{{Card{.name = "Temperature", .sensor = &id(iaq_temperature)},
             Card{.name = "Humidity", .sensor = &id(iaq_humidity)}}}};
 
   Point cursor{(it.get_width() - 1) / 2, 0};
   // Draw sensor reading cards from top to bottom
-  for (auto& [name, sensor] : kPages[page_index].cards) {
+  for (auto& [name, sensor] : kPages.at(page_index).cards) {
     cursor = DrawText(it, cursor, GetFont(FontSize::kSmall), name,
                       TextAlign::TOP_CENTER);
     const auto value_str =
