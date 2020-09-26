@@ -7,6 +7,8 @@ esphome:
   name: ${esphome_name}
   comment: ${esphome_comment}
   build_path: ./build/${esphome_name}
+  includes: # Only included into main sketch
+    - display.h
   platformio_options:
     # Unset option set by https://github.com/espressif/arduino-esp32/blob/idf-release/v4.0/platform.txt#L31
     build_unflags: -std=gnu++11
@@ -45,18 +47,27 @@ display:
     cs_pin: 5
     dc_pin: 16
     reset_pin: 23
-    lambda: |-
-      it.print(0, 0, id(callunasans_24), "Hello, World!");
+    id: display_front
+    pages:
+      - lambda: DrawPage(it, 0);
 
 font:
   - file: "CallunaSans-Regular.ttf"
-    id: callunasans_48
+    id: font_sans_48
     size: 48
 
   - file: "CallunaSans-Regular.ttf"
-    id: callunasans_24
+    id: font_sans_34
+    size: 34
+
+  - file: "CallunaSans-Regular.ttf"
+    id: font_sans_24
     size: 24
 
   - file: "CallunaSans-Regular.ttf"
-    id: callunasans_12
+    id: font_sans_17
+    size: 17
+
+  - file: "CallunaSans-Regular.ttf"
+    id: font_sans_12
     size: 12
