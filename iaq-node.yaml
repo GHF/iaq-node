@@ -52,22 +52,29 @@ display:
       - lambda: DrawPage(it, 0);
 
 font:
-  - file: "CallunaSans-Regular.ttf"
+  - file: "CallunaSansRegular.ttf"
     id: font_sans_48
     size: 48
+    glyphs: &font_glyphs
+      # Include both μ (U+03BC Greek Small Letter Mu) and µ (U+00B5 Micro Sign)
+      ' !"%()+,-./0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ:abcdefghijklmnopqrstuvwxyz_μµ°²³₂'
 
-  - file: "CallunaSans-Regular.ttf"
+  - file: "CallunaSansRegular.ttf"
     id: font_sans_34
     size: 34
+    glyphs: *font_glyphs
 
-  - file: "CallunaSans-Regular.ttf"
+  - file: "CallunaSansRegular.ttf"
     id: font_sans_24
     size: 24
+    glyphs: *font_glyphs
 
-  - file: "CallunaSans-Regular.ttf"
+  - file: "CallunaSansRegular.ttf"
     id: font_sans_17
     size: 17
+    glyphs: *font_glyphs
 
-  - file: "CallunaSans-Regular.ttf"
+  - file: "CallunaSansRegular.ttf"
     id: font_sans_12
     size: 12
+    glyphs: *font_glyphs
