@@ -38,7 +38,7 @@ sensor:
   - platform: template
     name: "${friendly_shortname} Humidity"
     id: iaq_humidity
-    accuracy_decimals: 0
+    accuracy_decimals: 1
     unit_of_measurement: "%"
     icon: "mdi:water-percent"
     filters: *iaq-aggregate-filters
