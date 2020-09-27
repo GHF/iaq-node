@@ -30,7 +30,7 @@ Extents GetTextExtents(DisplayBuffer& it,
                        Point start,
                        Font* font,
                        const std::string& text,
-                       TextAlign align = TextAlign::TOP_LEFT) {
+                       TextAlign align) {
   Extents extents;
   it.get_text_bounds(start.x, start.y, text.c_str(), font, align, &extents.p.x,
                      &extents.p.y, &extents.width, &extents.height);
@@ -55,8 +55,9 @@ Point DrawText(DisplayBuffer& it,
                Point start,
                Font* font,
                const std::string& text,
-               TextAlign align = TextAlign::TOP_LEFT) {
-  it.print(start.x, start.y, font, align, text.c_str());
+               TextAlign align,
+               Color color = COLOR_ON) {
+  it.print(start.x, start.y, font, color, align, text.c_str());
   const auto extents = GetTextExtents(it, start, font, text, align);
   return Point{start.x, extents.p.y + extents.height};
 }
@@ -79,6 +80,7 @@ Font* GetFont(FontSize size) {
 struct Card {
   std::string label;
   Sensor* sensor;
+  Color color;
 };
 
 struct Page {
@@ -88,20 +90,35 @@ struct Page {
 void DrawPage(DisplayBuffer& it, size_t page_index) {
   // Must be function statically initialized because id() can't be called at
   // namespace init time.
-  static std::array kPages{
-      Page{{Card{.label = u8"CO₂", .sensor = &id(iaq_scd30_co2)},
-            Card{.label = "TVOC", .sensor = &id(iaq_svm30_tvoc)}}},
-      Page{{Card{.label = "PM 2.5", .sensor = &id(iaq_pm_2_5)},
-            Card{.label = "PM 10", .sensor = &id(iaq_pm_10_0)}}},
-      Page{{Card{.label = "Temperature", .sensor = &id(iaq_temperature)},
-            Card{.label = "Humidity", .sensor = &id(iaq_humidity)}}}};
+  // Colors from https://colorbrewer2.org/#type=qualitative&scheme=Set3&n=6
+  static std::array kPages{Page{{Card{.label = u8"CO₂",
+                                      .sensor = &id(iaq_scd30_co2),
+                                      .color = Color(0x8dd3c7)},
+                                 Card{.label = "TVOC",
+                                      .sensor = &id(iaq_svm30_tvoc),
+                                      .color = Color(0xffffb3)}}},
+                           Page{{Card{.label = "PM 2.5",
+                                      .sensor = &id(iaq_pm_2_5),
+                                      .color = Color(0xbebada)},
+                                 Card{.label = "PM 10",
+                                      .sensor = &id(iaq_pm_10_0),
+                                      .color = Color(0xfb8072)}}},
+                           Page{{Card{.label = "Temperature",
+                                      .sensor = &id(iaq_temperature),
+                                      .color = Color(0x80b1d3)},
+                                 Card{.label = "Humidity",
+                                      .sensor = &id(iaq_humidity),
+                                      .color = Color(0xfdb462)}}}};
 
   // Draw sensor reading cards from top to bottom
   Point cursor{(it.get_width() - 1) / 2, 0};
-  for (auto& [label, sensor] : kPages.at(page_index).cards) {
+  for (auto& [label, sensor, color] : kPages.at(page_index).cards) {
     // Draw sensor label
+    // TODO: fade_to_black doesn't work on mainline ESPHome yet
+    // See https://github.com/esphome/esphome/pull/1300
+    const auto color_shaded = color.fade_to_black(180);
     cursor = DrawText(it, cursor, GetFont(FontSize::kNormal), label,
-                      TextAlign::TOP_CENTER);
+                      TextAlign::TOP_CENTER, color_shaded);
 
     // Format and measure the sensor state value in huge text
     const auto value_str =
@@ -113,18 +130,20 @@ void DrawPage(DisplayBuffer& it, size_t page_index) {
         cursor.y - GetTextExtents(it, cursor, value_font, value_str,
                                   TextAlign::BASELINE_LEFT)
                        .p.y;
-    auto [_, card_bottom] = DrawText(it, {0, cursor.y}, value_font,
-                                     value_str, TextAlign::TOP_LEFT);
+    auto [_, card_bottom] = DrawText(it, {0, cursor.y}, value_font, value_str,
+                                     TextAlign::TOP_LEFT, color);
 
     // Draw units right-aligned at the same baseline as the state value
     DrawText(it, {it.get_width() - 1, cursor.y + baseline_height},
              GetFont(FontSize::kNormal), sensor->get_unit_of_measurement(),
-             TextAlign::BASELINE_RIGHT);
+             TextAlign::BASELINE_RIGHT, color_shaded);
 
     // Draw dividing space with a thin line
     const int kCardSpacing = 14;
-    it.horizontal_line(kCardSpacing / 2, card_bottom + kCardSpacing / 2,
-                       it.get_width() - kCardSpacing);
+    const Color kCardDividerColor(0x202020);
+    it.horizontal_line(
+        /*x=*/kCardSpacing / 2, /*y=*/card_bottom + kCardSpacing / 2,
+        /*width=*/it.get_width() - kCardSpacing, /*color=*/kCardDividerColor);
     cursor = {cursor.x, card_bottom + kCardSpacing};
   }
 
