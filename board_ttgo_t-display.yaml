@@ -1,3 +1,4 @@
+---
 esphome:
   platform: ESP32
   board: esp32dev
@@ -10,7 +11,7 @@ output:
   - platform: ledc
     pin: 4
     id: ledc_display_backlight
-    frequency: 19531Hz # 12-bit depth
+    frequency: 19531Hz  # 12-bit depth
 
 spi:
   - id: spi_bus_0

@@ -1,3 +1,4 @@
+---
 packages:
   site: !include site.yaml
   board: !include board_ttgo_t-display.yaml
@@ -7,7 +8,7 @@ esphome:
   name: ${esphome_name}
   comment: ${esphome_comment}
   build_path: ./build/${esphome_name}
-  includes: # Only included into main sketch
+  includes:  # Only included into main sketch
     - display.h
   platformio_options:
     # Unset option set by https://github.com/espressif/arduino-esp32/blob/idf-release/v4.0/platform.txt#L31
@@ -61,7 +62,7 @@ binary_sensor:
     internal: true
     pin:
       number: 0
-      inverted: True
+      inverted: true
     on_release:
       then:
         - display.page.show_previous: display_front
@@ -73,7 +74,7 @@ binary_sensor:
     internal: true
     pin:
       number: 35
-      inverted: True
+      inverted: true
     on_release:
       then:
         - display.page.show_next: display_front

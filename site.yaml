@@ -1,3 +1,4 @@
+---
 substitutions:
   esphome_name: esphome_iaq_0
   esphome_comment: Indoor Air Quality Node 0
