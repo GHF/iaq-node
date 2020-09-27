@@ -34,7 +34,7 @@ time:
           lambda: id(ledc_display_backlight).set_level(0.5);
       - seconds: 0
         minutes: /1
-        hours: 21-7
+        hours: 21-23, 0-7
         then:
           lambda: id(ledc_display_backlight).set_level(0.05);
 
