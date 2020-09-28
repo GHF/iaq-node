@@ -50,14 +50,15 @@ sensor:
       name: "${friendly_shortname} SCD30 CO₂ Concentration"
       id: iaq_scd30_co2
       filters:
-        &scd30-common-filters
-        - exponential_moving_average:
+        - filter_out: 0  # Sometimes reports zero right after power cycle
+        - &scd30-smoothing-filter
+          exponential_moving_average:
             alpha: 0.4
             send_every: 5
     temperature:
       name: "${friendly_shortname} SCD30 Temperature"
       id: iaq_scd30_temperature
-      filters: *scd30-common-filters
+      filters: [*scd30-smoothing-filter]
       on_value:
         &iaq-temperature-publish
         lambda: id(iaq_temperature).publish_state(x);
@@ -65,7 +66,7 @@ sensor:
     humidity:
       name: "${friendly_shortname} SCD30 Humidity"
       id: iaq_scd30_humidity
-      filters: *scd30-common-filters
+      filters: [*scd30-smoothing-filter]
       on_value:
         &iaq-humidity-publish
         lambda: id(iaq_humidity).publish_state(x);
