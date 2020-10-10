@@ -11,6 +11,8 @@ esphome:
   includes:  # Only included into main sketch
     - display.h
   platformio_options:
+    # Override platform in order to unpin version set by ESPHome generator
+    platform: espressif32
     # Unset option set by https://github.com/espressif/arduino-esp32/blob/idf-release/v4.0/platform.txt#L31
     build_unflags: -std=gnu++11
     # Enable C++17
