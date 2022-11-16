@@ -10,20 +10,6 @@ esphome:
   build_path: ./build/${esphome_name}
   includes:  # Only included into main sketch
     - display.h
-  platformio_options:
-    # Override platform in order to unpin version set by ESPHome generator
-    platform: espressif32
-    # Unset option set by https://github.com/espressif/arduino-esp32/blob/idf-release/v4.0/platform.txt#L31
-    build_unflags: -std=gnu++11
-    # Enable C++17
-    build_flags: -std=gnu++1z
-    # Force the use of a newer ESP32 toolchain, which also requires a dev branch
-    # of arduino-esp32 that's compatible with ESP-IDF 4 (3.3 contained only GCC
-    # 5.2.0, which had poor C++17 support)
-    platform_packages: |
-
-      	toolchain-xtensa32 @ >2.80200.200827
-      	framework-arduinoespressif32 @ https://github.com/espressif/arduino-esp32.git#idf-release/v4.0
 
 time:
   - platform: homeassistant
@@ -45,9 +31,7 @@ time:
 # application logic (page rendering and navigation)
 display:
   - platform: st7789v
-    # Real backlight is controlled using ledc_display_backlight but this key is
-    # required, so use GPIO12 as a dummy value.
-    backlight_pin: 12
+    model: TTGO TDisplay 135x240
     cs_pin: 5
     dc_pin: 16
     reset_pin: 23
