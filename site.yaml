@@ -1,6 +1,6 @@
 ---
 substitutions:
-  esphome_name: esphome_iaq_0
+  esphome_name: esphome-iaq-0
   esphome_comment: Indoor Air Quality Node 0
   friendly_shortname: IAQ Node 0
 
