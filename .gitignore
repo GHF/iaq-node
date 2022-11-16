@@ -7,5 +7,6 @@
 **/platformio.ini
 /secrets.yaml
 /build/
+/Pipfile.lock
 .*.swp
 .*.swo

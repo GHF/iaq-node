@@ -10,7 +10,7 @@ This is designed to be an always-on measurement node that publishes data over a 
 - [SCD30](https://sensirion.com/products/catalog/SCD30/) NDIR CO₂ gas sensor
 
 ## Software
-1. Install ESPHome on development machine
-2. Copy and edit `secrets.yaml` from `secrets.yaml.example` template
-3. Edit `site.yaml` if necessary to configure node names and IDs
-4. `esphome iaq-node.yaml run`
+1. Copy and edit `secrets.yaml` from `secrets.yaml.example` template
+2. Edit `site.yaml` if necessary to configure node names and IDs
+3. `pipenv install`
+4. `pipenv run esphome run iaq-node.yaml`
