@@ -128,3 +128,7 @@ sensor:
       name: "${friendly_shortname} PM 2.5–10.0µm Concentration"
       id: iaq_pm_10_0
       filters: *pmsx003-common-filters
+
+  - platform: tsl2561
+    i2c_id: i2c_bus_0
+    name: "${friendly_shortname} Ambient Light"
