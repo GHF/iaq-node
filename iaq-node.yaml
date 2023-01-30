@@ -14,18 +14,6 @@ esphome:
 time:
   - platform: homeassistant
     id: time_esp
-    # Set display brightness by time of day
-    on_time:
-      - seconds: 0
-        minutes: /1
-        hours: 8-20
-        then:
-          lambda: id(ledc_display_backlight).set_level(0.5);
-      - seconds: 0
-        minutes: /1
-        hours: 21-23, 0-7
-        then:
-          lambda: id(ledc_display_backlight).set_level(0.05);
 
 # TODO(xo): Move display and buttons blocks into board config, keeping only
 # application logic (page rendering and navigation)

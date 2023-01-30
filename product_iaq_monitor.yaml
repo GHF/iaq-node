@@ -132,3 +132,19 @@ sensor:
   - platform: tsl2561
     i2c_id: i2c_bus_0
     name: "${friendly_shortname} Ambient Light"
+    update_interval: 1s
+    on_value:
+      then:
+        - light.turn_on:
+            id: light_display_backlight
+            # From "Integrating Ambient Light Sensors with Computers Running
+            # Windows 7" whose example data is for a display peaking at 151 nits
+            # and outputs into linear backlight duty cycle space.
+            # https://download.microsoft.com/download/3/0/2/3027d574-c433-412a-a8b6-5e0a75d5b237/ambient-light-sensors.docx
+            # The TTGO T-Display is rated for 400 nits and ESPHome applies gamma
+            # correction to make this output in units of perceptual brightness,
+            # so this curve only really works by fudgeful accident. The sensor
+            # can also read below 1 lux, so such values are clipped.
+            brightness: !lambda |-
+              return (x > 1254.f) ? 1.f :
+                                    0.099323f * log(max(x, 1.f)) + 0.27059f;
