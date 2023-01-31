@@ -140,13 +140,49 @@ sensor:
         - light.turn_on:
             id: light_display_backlight
             # From "Integrating Ambient Light Sensors with Computers Running
-            # Windows 7" whose example data is for a display peaking at 151 nits
-            # and outputs into linear backlight duty cycle space.
-            # https://download.microsoft.com/download/3/0/2/3027d574-c433-412a-a8b6-5e0a75d5b237/ambient-light-sensors.docx
+            # Windows 10" whose example curve takes illuminance (lux) and
+            # outputs into linear backlight luminance space (nits) and also
+            # perceptual brightness (%) for a display peaking at 435 nits.
+            # https://learn.microsoft.com/en-us/windows-hardware/design/whitepapers/integrating-ambient-light-sensors-with-computers-running-windows-10-creators-update
             # The TTGO T-Display is rated for 400 nits and ESPHome applies gamma
             # correction to make this output in units of perceptual brightness,
-            # so this curve only really works by fudgeful accident. The sensor
-            # can also read below 1 lux, so such values are clipped.
+            # different from the Windows 10 perceptual brightness slider. So,
+            # the "(Nits)" column in Fig. 10 is used to produce a brightness
+            # setting using the formula
+            #   brightness = (nits / 435) ** (1 / gamma)
+            # where gamma is defined as 2.8 for `light_display_backlight`.
             brightness: !lambda |-
-              return (x > 1254.f) ? 1.f :
-                                    0.099323f * log(max(x, 1.f)) + 0.27059f;
+              // sensor illuminance (lux) to perceptual brightness map (%)
+              // must be sorted by lux and start at the sensor's min reading
+              constexpr std::pair<float, float> kBrightnesses[] = {
+                {0.f, .146f},
+                {10.f, .355f},
+                {20.f, .441f},
+                {40.f, .563f},
+                {100.f, .660f},
+                {200.f, .706f},
+                {400.f, .766f},
+                {1200.f, .888f},
+                {2000.f, 1.f},
+              };
+
+              // Search for first point with lux strictly greater than `x`.
+              const auto next_brightness_iter = std::partition_point(
+                  std::begin(kBrightnesses), std::end(kBrightnesses),
+                  [x](auto p) { return p.first <= x; });
+
+              // `x` is NaN when the sensor is saturated
+              if (std::isnan(x) ||
+                  (next_brightness_iter == std::end(kBrightnesses))) {
+                // return max brightness setting in map
+                return std::rbegin(kBrightnesses)->second;
+              }
+
+              // linearly interpolate to the next lowest curve point
+              const auto prev_brightness_iter = std::prev(next_brightness_iter);
+              const float lux_0 = prev_brightness_iter->first;
+              const float lux_1 = next_brightness_iter->first;
+              const float bright_0 = prev_brightness_iter->second;
+              const float bright_1 = next_brightness_iter->second;
+              return bright_0 +
+                     (x - lux_0) * (bright_1 - bright_0) / (lux_1 - lux_0);

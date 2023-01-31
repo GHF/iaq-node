@@ -34,7 +34,7 @@ light:
     name: "${friendly_shortname} Display Backlight"
     id: light_display_backlight
     output: ledc_display_backlight
-    # Control and transition in brightness space, not duty cycle
+    # Control and transition in perceptual brightness space, not duty cycle
     gamma_correct: 2.8  # Default value, but make it explicit
 
 spi:
