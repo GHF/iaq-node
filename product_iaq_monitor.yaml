@@ -71,7 +71,7 @@ sensor:
         &iaq-humidity-publish
         lambda: id(iaq_humidity).publish_state(x);
       internal: true
-    update_interval: 2s
+    update_interval: &scd30-update-interval 2s
 
   # SVM30-J module contains both SGP30 and SHTC1
   - platform: sgp30
@@ -107,7 +107,9 @@ sensor:
       filters: *svm30-common-filters
       on_value: *iaq-humidity-publish
       internal: true
-    update_interval: *svm30-update-interval
+      # Update temp./hum. at same rate as SCD30's so aggregate filter's boxcar
+      # notches out any constant bias between the two sensors.
+    update_interval: *scd30-update-interval
 
   - platform: pmsx003
     type: PMSX003
