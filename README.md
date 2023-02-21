@@ -11,6 +11,7 @@ This is designed to be an always-on measurement node that publishes data over a 
 
 ## Software
 1. Copy and edit `secrets.yaml` from `secrets.yaml.example` template
+  - `api_encryption_key` is a [random 32-byte pre-shared key in base64](https://esphome.io/components/api.html)
 2. Edit `site.yaml` if necessary to configure node names and IDs
 3. `pipenv install`
 4. `pipenv run esphome run iaq-node.yaml`
