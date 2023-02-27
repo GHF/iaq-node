@@ -45,6 +45,8 @@ sensor:
         - exponential_moving_average:
             alpha: 0.2
             send_every: 10
+      # Do not publish estimated CO₂ because a real NDIR reading is available
+      internal: true
     tvoc:
       name: "${friendly_shortname} SVM30 TVOC Concentration"
       id: iaq_svm30_tvoc
