@@ -24,6 +24,7 @@ display:
     dc_pin: 16
     reset_pin: 23
     id: display_front
+    rotation: 180
     pages:
       - lambda: DrawPage(it, 0);
       - lambda: DrawPage(it, 1);
@@ -39,7 +40,7 @@ binary_sensor:
       inverted: true
     on_release:
       then:
-        - display.page.show_previous: display_front
+        - display.page.show_next: display_front
         - component.update: display_front
 
   - platform: gpio
@@ -51,7 +52,7 @@ binary_sensor:
       inverted: true
     on_release:
       then:
-        - display.page.show_next: display_front
+        - display.page.show_previous: display_front
         - component.update: display_front
 
 font:
