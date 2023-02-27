@@ -20,30 +20,6 @@ uart:
     stop_bits: 1
 
 sensor:
-  # Aggregated temperature
-  - platform: template
-    name: "${friendly_shortname} Temperature"
-    id: iaq_temperature
-    accuracy_decimals: 1
-    unit_of_measurement: "°C"
-    icon: "mdi:thermometer"
-    filters:
-      &iaq-aggregate-filters
-      - sliding_window_moving_average:
-          window_size: 8
-          send_every: 2
-          send_first_at: 2
-      - debounce: 1s
-
-  # Aggregated humidity
-  - platform: template
-    name: "${friendly_shortname} Humidity"
-    id: iaq_humidity
-    accuracy_decimals: 1
-    unit_of_measurement: "%"
-    icon: "mdi:water-percent"
-    filters: *iaq-aggregate-filters
-
   - platform: scd30
     i2c_id: i2c_bus_0
     co2:
@@ -55,23 +31,8 @@ sensor:
           exponential_moving_average:
             alpha: 0.4
             send_every: 5
-    temperature:
-      name: "${friendly_shortname} SCD30 Temperature"
-      id: iaq_scd30_temperature
-      filters: [*scd30-smoothing-filter]
-      on_value:
-        &iaq-temperature-publish
-        lambda: id(iaq_temperature).publish_state(x);
-      internal: true
-    humidity:
-      name: "${friendly_shortname} SCD30 Humidity"
-      id: iaq_scd30_humidity
-      filters: [*scd30-smoothing-filter]
-      on_value:
-        &iaq-humidity-publish
-        lambda: id(iaq_humidity).publish_state(x);
-      internal: true
-    update_interval: &scd30-update-interval 2s
+    # Do not publish temperature and humidity that are biased by the NDIR heater
+    update_interval: 2s
 
   # SVM30-J module contains both SGP30 and SHTC1
   - platform: sgp30
@@ -96,20 +57,14 @@ sensor:
   - platform: shtcx
     i2c_id: *svm30-i2c-bus
     temperature:
-      name: "${friendly_shortname} SVM30 Temperature"
+      name: "${friendly_shortname} Temperature"
       id: iaq_svm30_temperature
       filters: *svm30-common-filters
-      on_value: *iaq-temperature-publish
-      internal: true
     humidity:
-      name: "${friendly_shortname} SVM30 Humidity"
+      name: "${friendly_shortname} Humidity"
       id: iaq_svm30_humidity
       filters: *svm30-common-filters
-      on_value: *iaq-humidity-publish
-      internal: true
-      # Update temp./hum. at same rate as SCD30's so aggregate filter's boxcar
-      # notches out any constant bias between the two sensors.
-    update_interval: *scd30-update-interval
+    update_interval: *svm30-update-interval
 
   - platform: pmsx003
     type: PMSX003

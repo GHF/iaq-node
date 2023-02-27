@@ -104,10 +104,10 @@ void DrawPage(DisplayBuffer& it, size_t page_index) {
                                       .sensor = &id(iaq_pm_10_0),
                                       .color = Color(0xfb8072)}}},
                            Page{{Card{.label = "Temperature",
-                                      .sensor = &id(iaq_temperature),
+                                      .sensor = &id(iaq_svm30_temperature),
                                       .color = Color(0x80b1d3)},
                                  Card{.label = "Humidity",
-                                      .sensor = &id(iaq_humidity),
+                                      .sensor = &id(iaq_svm30_humidity),
                                       .color = Color(0xfdb462)}}}};
 
   // Draw sensor reading cards from top to bottom
