@@ -94,7 +94,7 @@ void DrawPage(DisplayBuffer& it, size_t page_index) {
   static std::array kPages{Page{{Card{.label = u8"CO₂",
                                       .sensor = &id(iaq_scd30_co2),
                                       .color = Color(0x8dd3c7)},
-                                 Card{.label = "TVOC",
+                                 Card{.label = "Total VOCs",
                                       .sensor = &id(iaq_svm30_tvoc),
                                       .color = Color(0xffffb3)}}},
                            Page{{Card{.label = "PM 2.5",
