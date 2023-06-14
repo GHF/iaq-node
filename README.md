@@ -1,7 +1,9 @@
 # iaq-node
 Indoor air quality (IAQ) data acquisition (DAQ) node running [ESPHome](https://esphome.io/).
 
-This is designed to be an always-on measurement node that publishes data over a home network to a [Home Assistant](https://www.home-assistant.io/) server.
+![Animated image of the physical node, with sensors and a display. The display shows the temperature and humidity. A USB C cable extends from the display and a prismatic lithium battery is visible. A thumb comes into view and presses on a tactile button on the display unit to change the display contents to particulate density, then again to gas concentrations.](doc/iaq_demo.webp)
+
+This is the software for an always-on measurement node that publishes data over a home network to a [Home Assistant](https://www.home-assistant.io/) server.
 
 ## Hardware
 - [TTGO T-Display](http://www.lilygo.cn/prod_view.aspx?Id=1126) ESP32 (Wi-Fi/BLE) dev board
