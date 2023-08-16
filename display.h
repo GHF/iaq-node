@@ -12,6 +12,7 @@
 // This file is included only by the main translation unit
 namespace {
 
+using namespace esphome::font;
 using namespace esphome::display;
 using namespace esphome::sensor;
 
@@ -26,7 +27,7 @@ struct Extents {
   int height;
 };
 
-Extents GetTextExtents(DisplayBuffer& it,
+Extents GetTextExtents(Display& it,
                        Point start,
                        Font* font,
                        const std::string& text,
@@ -51,7 +52,7 @@ Extents GetTextExtents(DisplayBuffer& it,
 
 // Returns a point that moves down by the height of the text printed. Note that
 // this only makes sense for top-aligned text.
-Point DrawText(DisplayBuffer& it,
+Point DrawText(Display& it,
                Point start,
                Font* font,
                const std::string& text,
@@ -87,7 +88,7 @@ struct Page {
   std::array<Card, 2> cards;
 };
 
-void DrawPage(DisplayBuffer& it, size_t page_index) {
+void DrawPage(Display& it, size_t page_index) {
   // Must be function statically initialized because id() can't be called at
   // namespace init time.
   // Colors from https://colorbrewer2.org/#type=qualitative&scheme=Set3&n=6
