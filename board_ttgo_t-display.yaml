@@ -21,7 +21,7 @@ esp32:
     # platform_version
     version: 2.0.11
     # C++17 requires GCC ≥8 toolchain from a newer PlatformIO ESP32 package
-    platform_version: 6.3.2
+    platform_version: 6.4.0
 
 output:
   - platform: ledc
