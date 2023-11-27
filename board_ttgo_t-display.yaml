@@ -14,14 +14,6 @@ esphome:
 
 esp32:
   board: esp32dev
-  framework:
-    type: arduino
-    # This version should correspond to the Arduino support package version in
-    # https://github.com/platformio/platform-espressif32/releases for the below
-    # platform_version
-    version: 2.0.11
-    # C++17 requires GCC ≥8 toolchain from a newer PlatformIO ESP32 package
-    platform_version: 6.4.0
 
 output:
   - platform: ledc
