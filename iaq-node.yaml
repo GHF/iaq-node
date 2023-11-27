@@ -20,6 +20,7 @@ time:
 display:
   - platform: st7789v
     model: TTGO TDisplay 135x240
+    backlight_pin: no  # https://github.com/esphome/issues/issues/4933
     cs_pin: 5
     dc_pin: 16
     reset_pin: 23
