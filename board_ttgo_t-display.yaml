@@ -7,10 +7,6 @@ esphome:
     # Enable C++17
     build_flags:
       - -std=gnu++1z
-  on_boot:
-    priority: -100
-    then:
-      lambda: id(ledc_display_backlight).set_level(1.0);
 
 esp32:
   board: esp32dev
@@ -28,6 +24,7 @@ light:
     output: ledc_display_backlight
     # Control and transition in perceptual brightness space, not duty cycle
     gamma_correct: 2.8  # Default value, but make it explicit
+    restore_mode: ALWAYS_ON
 
 spi:
   - id: spi_bus_0
