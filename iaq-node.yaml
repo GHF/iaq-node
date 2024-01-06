@@ -18,13 +18,18 @@ time:
 # TODO(xo): Move display and buttons blocks into board config, keeping only
 # application logic (page rendering and navigation)
 display:
-  - platform: st7789v
-    model: TTGO TDisplay 135x240
-    backlight_pin: no  # https://github.com/esphome/issues/issues/4933
+  - platform: ili9xxx
+    model: st7789v
     cs_pin: 5
     dc_pin: 16
     reset_pin: 23
     id: display_front
+    invert_colors: true
+    dimensions:
+      width: 135
+      height: 240
+      offset_width: 52
+      offset_height: 40
     rotation: 180
     pages:
       - lambda: DrawPage(it, 0);
